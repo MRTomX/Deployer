@@ -1,0 +1,25 @@
+{
+  "name": "deployer",
+  "version": "0.1.0",
+  "description": "Deployer for automatic deployment based on webhook call",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MRTomX/Deployer"
+  },
+  "keywords": [
+    "Gitlab",
+    "Webhooks",
+    "Node.js"
+  ],
+  "author": "Tomáš Vícha (MRTomX)",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/webhook": "^6.1.0",
+    "bl": "^5.0.0",
+    "config": "^3.3.7"
+  }
+}

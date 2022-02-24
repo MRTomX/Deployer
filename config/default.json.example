@@ -1,0 +1,20 @@
+{
+    "port": 3333,
+    "handlers": {
+        "gitlab": {
+            "events": {
+                "push": [
+                    {
+                        "hook": "url_part",
+                        "secret": "secret_pass",
+                        "script_path": "path_to_script"
+                    }
+                ]
+            }
+        }
+    },
+    "slack": {
+        "webhook_url": "slack_webhook_url",
+        "defaults": {}
+    }
+}
