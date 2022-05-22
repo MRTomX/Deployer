@@ -3,6 +3,7 @@ const timeCode = require("./utils/time");
 const http = require("http");
 const incomingWebhook = require("@slack/webhook").IncomingWebhook;
 const gitlabHandler = require("./handlers/gitlab");
+const bitbucketHandler = require("./handlers/bitbucket");
 
 console.log(timeCode(), "Process started");
 
@@ -16,10 +17,16 @@ if (!config.has("handlers")) {
     process.exit(1);
 }
 
-var handlers = {};
+let handlers = {};
 
 if (config.has("handlers.gitlab")) {
     handlers.gitlab = gitlabHandler(config.get("handlers.gitlab"), (msg) => {
+        sendSlackMessage(msg);
+    });
+}
+
+if (config.has("handlers.bitbucket")) {
+    handlers.bitbucket = bitbucketHandler(config.get("handlers.bitbucket"), (msg) => {
         sendSlackMessage(msg);
     });
 }
@@ -48,6 +55,12 @@ server.on("request", (request, response) => {
                         sendHttpResponse(response, status, msg);
                     });
                     break;
+                
+                case "bitbucket":
+                    handlers.bitbucket(request, body, (status, msg) => {
+                        sendHttpResponse(response, status, msg);
+                    });
+                    break;
     
                 default:
                     sendHttpResponse(
@@ -58,7 +71,7 @@ server.on("request", (request, response) => {
                     break;
             }
         } catch (error) {
-            sendHttpResponse(res, "FATAL", error);
+            sendHttpResponse(response, "FATAL", error);
         }
     });
 });

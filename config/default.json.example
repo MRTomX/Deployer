@@ -11,7 +11,21 @@
                     }
                 ]
             }
-        }
+        },
+        "bitbucket": [
+            {
+                "hook": "url_part",
+                "hook_uuid": "X-Hook-UUID",
+                "events": {
+                    "push": [
+                        {
+                            "branch": "branch_name",
+                            "script_path": "path_to_script"
+                        }
+                    ]
+                }
+            }
+        ]
     },
     "slack": {
         "webhook_url": "slack_webhook_url",

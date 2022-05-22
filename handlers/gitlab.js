@@ -38,7 +38,7 @@ function initCheck(options) {
 
 function create(options, slackCallback) {
     initCheck(options);
-    return handler
+    return handler;
 
 
     function getEventKey(requestedEvent) {
@@ -100,23 +100,23 @@ function create(options, slackCallback) {
             return hasError("NOT_FOUND", "There is no endpoint for method: " + request.method);
         }
 
-        var secretToken = request.headers["x-gitlab-token"];
+        let secretToken = request.headers["x-gitlab-token"];
         if (!secretToken) {
             return hasError("REQUEST_FAILED", "No X-Gitlab-Token found on the request");
         }
 
-        var requestedEvent = request.headers["x-gitlab-event"];
+        let requestedEvent = request.headers["x-gitlab-event"];
         if (!requestedEvent) {
             return hasError("REQUEST_FAILED", "No X-Gitlab-Event found on request");
         }
 
-        var eventKey = getEventKey(requestedEvent);
+        let eventKey = getEventKey(requestedEvent);
         if (eventKey === null) {
             return hasError("REQUEST_FAILED", "X-Gitlab-Event is not acceptable");
         }
 
-        var requestedHook = request.url.split("?").shift().split("/")[2];
-        var eventObject = getEventObject(requestedHook, eventKey, secretToken);
+        let requestedHook = request.url.split("?").shift().split("/")[2];
+        let eventObject = getEventObject(requestedHook, eventKey, secretToken);
         if (eventObject === null) {
             return hasError("NOT_FOUND", "Hook with given parameters does not exist");
         }
@@ -126,7 +126,7 @@ function create(options, slackCallback) {
         }
 
         try {
-            body = JSON.parse(requestBody);
+            var body = JSON.parse(requestBody);
         } catch (error) {
             return hasError("REQUEST_FAILED", "Problem with parsing JSON body");
         }
